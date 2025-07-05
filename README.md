@@ -5,7 +5,8 @@
 
 # GlitterDrag Mod
 
-An Firefox extension for drag behaviors, with WebExtension.
+A Firefox extension for drag behaviors, with WebExtension.
+
 Modified to support Magnet links.
 
 # Goals
