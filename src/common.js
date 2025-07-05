@@ -1,6 +1,7 @@
 const commons = {
     // from superdrag   https://addons.mozilla.org/en-US/firefox/addon/super-drag/
-    urlPattern: /^(https?:\/\/)?((\w|-)*\.){0,3}((\w|-)+)\.(com|net|org|gov|edu|mil|biz|cc|info|fm|mobi|tv|ag|am|asia|at|au|be|br|bz|ca|cn|co|de|do|ee|es|eu|fr|gd|gl|gs|im|in|it|jp|la|ly|me|mp|ms|mx|nl|pe|ph|ru|se|so|tk|to|tt|tw|us|uk|ws|xxx)(\/(\w|%|&|-|_|\||\?|\.|=|\/|#|~|!|\+|,|\*|@)*)?$/i,
+    // danielmmmm: Add RegEx pattern to match a Magnet link
+    urlPattern: /^(https?:\/\/)?((\w|-)*\.){0,3}((\w|-)+)\.(com|net|org|gov|edu|mil|biz|cc|info|fm|mobi|tv|ag|am|asia|at|au|be|br|bz|ca|cn|co|de|do|ee|es|eu|fr|gd|gl|gs|im|in|it|jp|la|ly|me|mp|ms|mx|nl|pe|ph|ru|se|so|tk|to|tt|tw|us|uk|ws|xxx)(\/(\w|%|&|-|_|\||\?|\.|=|\/|#|~|!|\+|,|\*|@)*)?$|^magnet:\?xt=urn:btih:[0-9a-fA-F]{40,}.*$/i,
     // this regex is from: https://stackoverflow.com/questions/14473180/regex-to-get-a-filename-from-a-url
     // but I make small changes to get extension of file
     fileExtension: /[^/\\&?]+(\.\w{3,4})(?=([?&].*$|$))/,
@@ -198,7 +199,14 @@ const typeUtil = {
         const KnowTopDomain1 = /\.(com|net|org|gov|edu|info|mobi|mil|asia)$/;
         const KnowTopDomain2 = /\.(de|uk|eu|nl|it|cn|be|us|br|jp|ch|fr|at|se|es|cz|pt|ca|ru|hk|tw|pl|me|tv|cc)$/;
         const IsIpAddress = /^([1-2]?\d?\d\.){3}[1-2]?\d?\d/;
-        const seemAsURL = !HasSpace.test(url) && DomainName.test(url) && (KnowNameOrSlash.test(url) || KnowTopDomain1.test(url) || KnowTopDomain2.test(url) || IsIpAddress.test(url));
+        // danielmmmm: Add constant with RegEx for a Magnet link
+        const MagnetLink = /^magnet:\?xt=urn:btih:[0-9a-fA-F]{40,}.*$/;
+        // danielmmmm: If a Magnet link was matched, return the Magnet link instead of a URL. 
+        if ( MagnetLink == null) {
+          const seemAsURL = !HasSpace.test(url) && DomainName.test(url) && (KnowNameOrSlash.test(url) || KnowTopDomain1.test(url) || KnowTopDomain2.test(url) || IsIpAddress.test(url));
+        } else {
+          const seemAsURL = !HasSpace.test(url) && MagnetLink.test(url);
+        }
         return seemAsURL;
     },
 
@@ -207,7 +215,8 @@ const typeUtil = {
         try {
             const url = new URL(str);
             // fix #106
-            if (str.startsWith(`${url.protocol}//`)) {
+            // danielmmmm: A Magnet link should be regarded as valid too
+            if (str.startsWith(`${url.protocol}//`) || str.startsWith(`magnet:`)) {
                 return true;
             }
             return false;
