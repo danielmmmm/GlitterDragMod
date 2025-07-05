@@ -3,11 +3,10 @@
 [![Travis](https://img.shields.io/travis/harytfw/GlitterDrag/master.svg)](https://travis-ci.org/harytfw/GlitterDrag)
 [![license](https://img.shields.io/github/license/harytfw/GlitterDrag.svg)]()
 
-# GlitterDrag（闪耀拖拽）
+# GlitterDrag Mod
 
 An Firefox extension for drag behaviors, with WebExtension.
-
-兼容多进程的Firefox拖拽扩展
+Modified to support Magnet links.
 
 # Goals
 
