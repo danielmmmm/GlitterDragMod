@@ -2,12 +2,12 @@
     "description": "__MSG_extensionDescription__",
     "manifest_version": 2,
     "name": "__MSG_extensionName__",
-    "version": "1.57.0b1",
-    "homepage_url": "https://github.com/harytfw/GlitterDrag",
+    "version": "1.58",
+    "homepage_url": "https://github.com/danielmmmm/GlitterDragMod",
     "icons": {
         "128": "/icon/drag.png"
     },
-    "author": "harytfw",
+    "author": "harytfw_danielmmmm",
     "browser_action": {
         "default_title": "__MSG_browserActionTitle__",
         "default_icon": {
@@ -58,13 +58,13 @@
     "default_locale": "en",
     "applications": {
         "gecko": {
-            "id": "glitterdrag@harytfw",
+            "id": "glitterdragmod@danielmmmm",
             "strict_min_version": "63.0"
         }
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "glitterdrag@harytfw",
+            "id": "glitterdragmod@danielmmmm",
             "strict_min_version": "63.0"
         }
     },
